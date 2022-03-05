@@ -1,7 +1,7 @@
 <div align="center">
 
-## Framework Symfony - Projet Procost
+## Framework Symfony - Procost
     
 </div>
 
-### 🚀 Réalisé par GIRON Maxence | gironmaxence.pro@gmail.com
+### 🚀 Realized by GIRON Maxence | gironmaxence.pro@gmail.com
