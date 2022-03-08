@@ -101,7 +101,7 @@ class WorkingHoursRepository extends ServiceEntityRepository
     {
         $queryb = $this->createQueryBuilder('m')
             ->select('count(m)')
-            ->where('m.employ = :id')
+            ->where('m.employee = :id')
             ->setParameter('id', $id);
         return $queryb->getQuery()->getOneOrNullResult();
     }
