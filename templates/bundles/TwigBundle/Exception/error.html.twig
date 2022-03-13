@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+    <main class="app-content">
+        <div class="app-title">
+            <h1>Oops ! Problem occurred ...</h1>
+            <p><a href={{ path('main_homepage') }}>Return to the homepage</a></p>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Form Employee{% endblock %}
+
+{% block content %}
+    <main class="app-content">
+        <div class="app-title">
+            <div>
+                {% if path(
+                app.request.attributes.get('_route'),
+                app.request.attributes.get('_route_params')
+                ) == "/employee/edit" %}
+                    <h1><i class="fa fa-users"></i>Create employee</h1>
+                {% else %}
+                    <h1><i class="fa fa-users"></i>Update employee</h1>
+                {% endif %}
+            </div>
+            <ul class="app-breadcrumb breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('main_homepage') }}"><i class="fa fa-home fa-lg"></i></a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('list_employee') }}">Employees</a>
+                </li>
+
+                {% if path(
+                app.request.attributes.get('_route'),
+                app.request.attributes.get('_route_params')
+                ) == "/employee/edit" %}
+                    <li class="breadcrumb-item">Create employee</li>
+                {% else %}
+                    <li class="breadcrumb-item">Update employee</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="tile">
+            {{ form_start(form) }}
+            <section>
+                <h3>General Information</h3>
+                <div class="row mt-4">
+                    <div class="offset-md-4 col-md-8">
+                        <div class="form-group row">
+                            {{ form_errors(form.firstName) }}
+                            {{ form_label(form.firstName) }}
+                            {{ form_widget(form.firstName,{'attr':{'class':'form-control','placeholder':form.firstName.vars.label} }) }}
+                        </div>
+                        <div class="form-group row">
+                            {{ form_errors(form.lastName) }}
+                            {{ form_label(form.lastName) }}
+                            {{ form_widget(form.lastName,{'attr':{'class':'form-control','placeholder':form.lastName.vars.label} }) }}
+                        </div>
+                        <div class="form-group row">
+                            {{ form_errors(form.email) }}
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email,{'attr':{'class':'form-control','placeholder':form.email.vars.label} }) }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr/>
+            <section>
+                <h3>Production</h3>
+                <div class="row mt-4">
+                    <div class="offset-md-4 col-md-8">
+                        <div class="form-group row">
+                            {{ form_errors(form.job) }}
+                            {{ form_label(form.job) }}
+                            {{ form_widget(form.job,{'attr':{'class':'form-control','placeholder':form.job.vars.label}}) }}
+                        </div>
+                        <div class="form-group row">
+                            {{ form_errors(form.dailyCost) }}
+                            {{ form_label(form.dailyCost) }}
+                            {{ form_widget(form.dailyCost,{'type':'number', 'attr':{'class':'form-control','placeholder':form.dailyCost.vars.label} }) }}
+                        </div>
+                        <div class="form-group row">
+                            {{ form_errors(form.hiringDate) }}
+                            {{ form_label(form.hiringDate) }}
+                            {{ form_widget(form.hiringDate,{'attr':{'class':'form-control','placeholder':form.hiringDate.vars.label} }) }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr/>
+            <div class="row">
+                <div class="offset-md-6 col-md-6">
+                    {% if path(
+                    app.request.attributes.get('_route'),
+                    app.request.attributes.get('_route_params')
+                    ) == "/employ/edit" %}
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Create</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Update</button>
+                    {% endif %}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}

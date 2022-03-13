@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <body class="app sidebar-mini">
+        <!-- Navbar -->
+        <header class="app-header"><a class="app-header__logo" href="#">Procost</a>
+            <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+            <!-- Navbar Right Menu-->
+            <ul class="app-nav">
+                <li class="app-search">
+                    <a href="{{ path('app_logout') }}" class="btn btn-info">Log out</a>
+                </li>
+            </ul>
+        </header>
+
+        <!-- Sidebar menu-->
+        <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+        <aside class="app-sidebar">
+            <div class="app-sidebar__user">
+                <img class="app-sidebar__user-avatar" src="{{ asset('img/user.jpg') }}" alt="User Image">
+                <div>
+                    <p class="app-sidebar__user-name">{{ app.user.employee.firstName }} {{ app.user.employee.lastName }}</p>
+                    <p class="app-sidebar__user-designation">{{ app.user.employee.job.name }}</p>
+                </div>
+            </div>
+            {% set current_route = app.request.attributes.get('_route') %}
+            <ul class="app-menu">
+                <li>
+                    <a class="app-menu__item active" href="#">
+                        <i class="app-menu__icon fa fa-dashboard"></i>
+                        <span class="app-menu__label">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item {{ current_route is same as('list_project') or
+                        current_route is same as('create_project') or
+                        current_route is same as('modify_project')
+                        ? 'active' }}"
+                    href={{ path('list_project') }}>
+                        <i class="app-menu__icon fa fa-laptop"></i>
+                        <span class="app-menu__label">Projects</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item {{ current_route is same as('list_employee') ? 'active' }}"
+                    href={{ path('list_employee') }}>
+                        <i class="app-menu__icon fa fa-users"></i>
+                        <span class="app-menu__label">Employees</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item {{ current_route is same as('list_job') ? 'active' }}"
+                    href={{ path('list_job') }}>
+                        <i class="app-menu__icon fa fa-book"></i>
+                        <span class="app-menu__label">Jobs</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        {% block content %} {% endblock %}
+
+        <footer class="main-footer">
+            &copy; 2022 - PROCOST
+        </footer>
+
+    </body>
+{% endblock %}

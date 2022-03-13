@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Error 404{% endblock %}
+
+{% block content %}
+    <main class="app-content">
+        <div class="app-title">
+            <h1>Oops ! Page not found ...</h1>
+            <p><a href={{ path('main_homepage') }}>Return to the homepage</a></p>
+        </div>
+    </main>
+{% endblock %}
