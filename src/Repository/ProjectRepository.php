@@ -34,7 +34,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getResult();
     }
 
-    public function endCountProject()
+    public function finishCountProject()
     {
         $queryb = $this->createQueryBuilder('p')
             ->select('count(p)')
@@ -58,7 +58,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getResult();
     }
 
-    public function notEndCountProject()
+    public function notFinishCountProject()
     {
         $queryb = $this->createQueryBuilder('p')
             ->select('count(p)')
