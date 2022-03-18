@@ -15,8 +15,21 @@ class AppFixtures extends Fixture
 {
     private ObjectManager $manager;
 
-    public function __construct()
-    {  }
+    private const DATA_JOBS = [
+        ['Full-Stack Developer'],
+        ['Front-End Developer'],
+        ['Back-End Developer'],
+        ['Web Project Manager'],
+        ['SEO Consultant'],
+    ];
+
+    private const DATA_EMPLOYEES = [
+        ['Maxence', 'GIRON', 'maxence.giron@gmail.com', '1000'],
+        ['John', 'DOE', 'john.doe@gmail.com', '800'],
+        ['Harry', 'COVER', 'harry.cover@gmail.com', '600'],
+        ['Jean', 'REGISTRE', 'jean.registre@gmail.com', '400'],
+        ['Alex', 'TERIEUR', 'alex.terieur@gmail.com', '200'],
+    ];
 
     public function load(ObjectManager $manager)
     {
@@ -30,16 +43,9 @@ class AppFixtures extends Fixture
 
     private function createJobs()
     {
-        $jobs = [
-            ['Développeur Full-Stack'],
-            ['Développeur Front-End'],
-            ['Développeur Back-End'],
-            ['Chef de Projet Web'],
-            ['Consultant SEO'],
-        ];
-
-        foreach ($jobs as $key => [$name]) {
-            $job = (new Job())->setName((string)$name);
+        foreach (self::DATA_JOBS as $key => [$name]) {
+            $job = (new Job())
+                ->setName((string)$name);
             $this->manager->persist($job);
             $this->addReference(Job::class . $key, $job);
         }
@@ -47,15 +53,7 @@ class AppFixtures extends Fixture
 
     private function createEmployees()
     {
-        $employees = [
-            ['Maxence', 'GIRON', 'maxence.giron@gmail.com', '1000'],
-            ['John', 'DOE', 'john.doe@gmail.com', '800'],
-            ['Harry', 'COVER', 'harry.cover@gmail.com', '600'],
-            ['Jean', 'REGISTRE', 'jean.registre@gmail.com', '400'],
-            ['Alex', 'TERIEUR', 'alex.terieur@gmail.com', '200'],
-        ];
-
-        foreach ($employees as $key => $value) {
+        foreach (self::DATA_EMPLOYEES as $key => $value) {
             $job = $this->getReference(Job::class . random_int(0, 4));
             $employee = (new Employee())
                 ->setFirstName((string)$value[0])
@@ -71,7 +69,7 @@ class AppFixtures extends Fixture
 
     private function createProjects()
     {
-        $projects = [
+        $DATA_PROJECTS = [
             ['Project 1', 'Here is the description of the Project 1 ...', '10000', new DateTime()],
             ['Project 2', 'Here is the description of the Project 2 ...', '20000', new DateTime()],
             ['Project 3', 'Here is the description of the Project 3 ...', '30000', new DateTime()],
@@ -84,7 +82,7 @@ class AppFixtures extends Fixture
             ['Project 10', 'Here is the description of the Project 10 ...', '100000', new DateTime()],
         ];
 
-        foreach ($projects as $key => $value) {
+        foreach ($DATA_PROJECTS as $key => $value) {
             $project = (new Project())
                 ->setName((string)$value[0])
                 ->setDescription($value[1])
