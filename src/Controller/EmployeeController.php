@@ -8,29 +8,29 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Employee;
-use App\Entity\WorkingHours;
+use App\Entity\WorkingDays;
 use App\Form\AddTimeType;
 use App\Form\EmployeeType;
 use App\Manager\AddTimeManager;
 use App\Manager\EmployeeManager;
 use App\Repository\EmployeeRepository;
-use App\Repository\WorkingHoursRepository;
+use App\Repository\WorkingDaysRepository;
 
 class EmployeeController extends AbstractController
 {
     private EmployeeRepository $employeeRepository;
     private EmployeeManager $employeeManager;
-    private WorkingHoursRepository $workingHoursRepository;
+    private WorkingDaysRepository $workingDaysRepository;
     private AddTimeManager $addTimeManager;
 
     public function __construct(EmployeeRepository $employeeRepository,
                                 EmployeeManager $employeeManager,
-                                WorkingHoursRepository $workingHoursRepository,
+                                WorkingDaysRepository $workingDaysRepository,
                                 AddTimeManager $addTimeManager)
     {
         $this->employeeRepository = $employeeRepository;
         $this->employeeManager = $employeeManager;
-        $this->workingHoursRepository = $workingHoursRepository;
+        $this->workingDaysRepository = $workingDaysRepository;
         $this->addTimeManager = $addTimeManager;
     }
 
@@ -109,12 +109,12 @@ class EmployeeController extends AbstractController
     public function showEmployee(Request $request, int $id, ?int $page): Response
     {
         if ($this->getEmployee()->getId() === $id) {
-            $hourlists = $this->workingHoursRepository->findAllValue($id, $page);
+            $hourlists = $this->workingDaysRepository->findAllValue($id, $page);
             $employee = $this->employeeRepository->find($id);
             $url = '/employee/show/' . $id . '/';
-            $countPage = ceil($this->workingHoursRepository->countLineByEmployee($id)[1] / 5);
+            $countPage = ceil($this->workingDaysRepository->countLineByEmployee($id)[1] / 5);
 
-            $addTime = new WorkingHours();
+            $addTime = new WorkingDays();
             $addTime->setEmployee($hourlists[0]->getEmployee());
             $form = $this->createForm(AddTimeType::class, $addTime);
             $form->handleRequest($request);

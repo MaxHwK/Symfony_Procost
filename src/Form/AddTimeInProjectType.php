@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use App\Entity\Employee;
-use App\Entity\WorkingHours;
+use App\Entity\WorkingDays;
 
 class AddTimeInProjectType extends AbstractType
 {
@@ -25,7 +25,7 @@ class AddTimeInProjectType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => WorkingHours::class,
+            'data_class' => WorkingDays::class,
         ]);
     }
 }

@@ -5,8 +5,8 @@ namespace App\Manager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-use App\Entity\WorkingHours;
-use App\Event\WorkingHoursCreated;
+use App\Entity\WorkingDays;
+use App\Event\WorkingDaysCreated;
 
 class AddTimeManager
 {
@@ -19,10 +19,10 @@ class AddTimeManager
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function save(WorkingHours $workingHours): void
+    public function save(WorkingDays $workingDays): void
     {
-        $this->em->persist($workingHours);
+        $this->em->persist($workingDays);
         $this->em->flush();
-        $this->eventDispatcher->dispatch(new WorkingHoursCreated($workingHours));
+        $this->eventDispatcher->dispatch(new WorkingDaysCreated($workingDays));
     }
 }

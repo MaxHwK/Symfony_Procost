@@ -8,31 +8,31 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
 
-use App\Entity\WorkingHours;
+use App\Entity\WorkingDays;
 use App\Entity\Project;
 use App\Form\AddTimeInProjectType;
 use App\Form\AddTimeInProjectWithoutEmployeeType;
 use App\Form\ProjectType;
 use App\Manager\AddTimeManager;
 use App\Manager\ProjectManager;
-use App\Repository\WorkingHoursRepository;
+use App\Repository\WorkingDaysRepository;
 use App\Repository\ProjectRepository;
 
 class ProjectController extends AbstractController
 {
     private ProjectRepository $projectRepository;
     private ProjectManager $projectManager;
-    private WorkingHoursRepository $workingHoursRepository;
+    private WorkingDaysRepository $workingDaysRepository;
     private AddTimeManager $addTimeManager;
 
     public function __construct(ProjectRepository $projectRepository,
                                 ProjectManager $projectManager,
-                                WorkingHoursRepository $workingHoursRepository,
+                                WorkingDaysRepository $workingDaysRepository,
                                 AddTimeManager $addTimeManager)
     {
         $this->projectRepository = $projectRepository;
         $this->projectManager = $projectManager;
-        $this->workingHoursRepository = $workingHoursRepository;
+        $this->workingDaysRepository = $workingDaysRepository;
         $this->addTimeManager = $addTimeManager;
     }
 
@@ -109,13 +109,13 @@ class ProjectController extends AbstractController
     public function showProject(Request $request, int $id, ?int $page): Response
     {
         $project = $this->projectRepository->find($id);
-        $infoEmployeeOnPrj = $this->workingHoursRepository->findValuePersonByProject($id, $page);
-        $infoCostProject = $this->workingHoursRepository->findEmployeeByProject($id);
+        $infoEmployeeOnPrjs = $this->workingDaysRepository->findValuePersonByProject($id, $page);
+        $infoCostProject = $this->workingDaysRepository->findEmployeeByProject($id);
         $url = '/project/show/' . $id . '/';
-        $countPage = ceil($this->workingHoursRepository->countLineByProject($id)[1] / 5);
+        $countPage = ceil($this->workingDaysRepository->countLineByProject($id)[1] / 5);
 
             if ($project->getDeliveryDate() === null) {
-                $addTime = new WorkingHours();
+                $addTime = new WorkingDays();
                 $addTime->setProject($project);
                 $addTime->setEmployee($this->getEmployee());
                 $form = $this->createForm(AddTimeInProjectType::class, $addTime);
@@ -128,7 +128,7 @@ class ProjectController extends AbstractController
                 }
                 return $this->render('project/detailProject.html.twig', [
                     'project' => $project,
-                    'infoEmployeeOnPrj' => $infoEmployeeOnPrj,
+                    'infoEmployeeOnPrjs' => $infoEmployeeOnPrjs,
                     'infoCostProject' => $infoCostProject,
                     'form' => $form->createView(),
                     'countPage' => $countPage,
@@ -139,7 +139,7 @@ class ProjectController extends AbstractController
 
                 return $this->render('project/detailProject.html.twig', [
                     'project' => $project,
-                    'infoEmployeeOnPrj' => $infoEmployeeOnPrj,
+                    'infoEmployeeOnPrjs' => $infoEmployeeOnPrjs,
                     'infoCostProject' => $infoCostProject,
                     'countPage' => $countPage,
                     'actualyPage' => $page,

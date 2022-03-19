@@ -5,19 +5,19 @@ namespace App\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-use App\Entity\WorkingHours;
+use App\Entity\WorkingDays;
 
 /**
- * @method WorkingHours|null find($id, $lockMode = null, $lockVersion = null)
- * @method WorkingHours|null findOneBy(array $criteria, array $orderBy = null)
- * @method WorkingHours[]    findAll()
- * @method WorkingHours[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method WorkingDays|null find($id, $lockMode = null, $lockVersion = null)
+ * @method WorkingDays|null findOneBy(array $criteria, array $orderBy = null)
+ * @method WorkingDays[]    findAll()
+ * @method WorkingDays[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WorkingHoursRepository extends ServiceEntityRepository
+class WorkingDaysRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, WorkingHours::class);
+        parent::__construct($registry, WorkingDays::class);
     }
 
     public function findAllValues($id, $page)
@@ -50,11 +50,11 @@ class WorkingHoursRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getResult();
     }
 
-    public function findFiveLatestCreateInfos()
+    public function findTenLatestCreateInfos()
     {
         $queryb = $this->createQueryBuilder('m')
             ->orderBy('m.creationDate', 'DESC')
-            ->setMaxResults(5);
+            ->setMaxResults(10);
         return $queryb->getQuery()->getResult();
     }
 
@@ -69,10 +69,10 @@ class WorkingHoursRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getResult();
     }
 
-    public function countHours()
+    public function countDays()
     {
         $queryb = $this->createQueryBuilder('m')
-            ->select('sum(m.nbDays) as allHours');
+            ->select('sum(m.nbDays) as allDays');
         return $queryb->getQuery()->getOneOrNullResult();
     }
 

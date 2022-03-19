@@ -59,7 +59,7 @@ class Employee
     private $hiringDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\WorkingHours", mappedBy="employee")
+     * @ORM\OneToMany(targetEntity="App\Entity\WorkingDays", mappedBy="employee")
      */
     private $timesList;
 
@@ -151,7 +151,7 @@ class Employee
         return $this->timesList;
     }
 
-    public function addOneInTimesList(WorkingHours $value): self
+    public function addOneInTimesList(WorkingDays $value): self
     {
         if (!$this->timesList->contains($value)) {
             $this->timesList[] = $value;
@@ -161,7 +161,7 @@ class Employee
         return $this;
     }
 
-    public function removeOneInTimesList(WorkingHours $value): self
+    public function removeOneInTimesList(WorkingDays $value): self
     {
         if ($this->timesList->contains($value)) {
             $this->timesList->removeElement($value);

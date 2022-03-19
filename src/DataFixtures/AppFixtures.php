@@ -9,7 +9,7 @@ use DateTime;
 use App\Entity\Job;
 use App\Entity\Employee;
 use App\Entity\Project;
-use App\Entity\WorkingHours;
+use App\Entity\WorkingDays;
 
 class AppFixtures extends Fixture
 {
@@ -37,7 +37,7 @@ class AppFixtures extends Fixture
         $this->createJobs();
         $this->createEmployees();
         $this->createProjects();
-        $this->createWorkingHours();
+        $this->createWorkingDays();
         $manager->flush();
     }
 
@@ -80,6 +80,8 @@ class AppFixtures extends Fixture
             ['Project 8', 'Here is the description of the Project 8 ...', '80000', new DateTime()],
             ['Project 9', 'Here is the description of the Project 9 ...', '90000', new DateTime()],
             ['Project 10', 'Here is the description of the Project 10 ...', '100000', new DateTime()],
+            ['Project 11', 'Here is the description of the Project 11 ...', '110000', new DateTime()],
+            ['Project 12', 'Here is the description of the Project 12 ...', '120000', new DateTime()],
         ];
 
         foreach ($DATA_PROJECTS as $key => $value) {
@@ -93,21 +95,21 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function createWorkingHours()
+    private function createWorkingDays()
     {
-        $WorkingHours = [
-            ['2'], ['4'], ['6'], ['8'], ['10'], ['8'],
-            ['6'], ['4'], ['2'], ['4'], ['6'], ['8'],
-            ['10'], ['8'], ['6'], ['4'],
+        $WorkingDays = [
+            ['2'], ['4'], ['6'], ['8'], ['10'], ['12'],
+            ['1'], ['3'], ['5'], ['7'], ['9'], ['11'],
+            ['2'], ['4'], ['6'], ['8'], ['10'], ['12'],
         ];
 
-        foreach ($WorkingHours as $key => [$value]) {
-            $project = (new WorkingHours())
+        foreach ($WorkingDays as $key => [$value]) {
+            $project = (new WorkingDays())
                 ->setEmployee($this->getReference(Employee::class . random_int(0, 4)))
                 ->setProject($this->getReference(Project::class . random_int(0, 3)))
                 ->setNbDays($value);
             $this->manager->persist($project);
-            $this->addReference(WorkingHours::class . $key, $project);
+            $this->addReference(WorkingDays::class . $key, $project);
         }
     }
 

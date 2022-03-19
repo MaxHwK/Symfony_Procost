@@ -6,7 +6,7 @@
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="fa fa-laptop"></i>&nbsp;Projects</h1>
+                <h1><i class="fa fa-laptop"></i>&nbsp;All Projects</h1>
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item">
@@ -41,9 +41,9 @@
                             <td>{{ project.price|format_currency('EUR') }}</td>
                             <td>{{ project.creationDate|date("d/m/Y") }}</td>
                             {% if project.deliveryDate == null %}
-                                <td> No Date</td>
+                                <td>No date yet</td>
                             {% else %}
-                                <td>{{ project.deliveryDate|date("d /m/Y") }}</td>
+                                <td>{{ project.deliveryDate|date("d/m/Y") }}</td>
                             {% endif %}
                             <td>
                                 <a href="{{ asset('/project/show/'~project.id) }}" class="btn btn-primary btn-sm">

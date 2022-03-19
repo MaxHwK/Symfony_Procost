@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Detail Project{% endblock %}
+{% block title %}Detail of {{ project.name }}{% endblock %}
 
 {% block content %}
     <main class="app-content">
@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="days-count" class="control-label col-md-6">Number of hours</label>
+                            <label for="days-count" class="control-label col-md-6">Number of days</label>
                             <div class="col-md-6">
                                 {{ form_errors(form.nbDays) }}
                                 {{ form_label(form.nbDays) }}
@@ -99,14 +99,14 @@
             </div>
             <div class="col-md-8">
                 <div class="tile pb-5">
-                    <h3 class="tile-title">History</h3>
+                    <h3 class="tile-title">Project History</h3>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-sm">
                             <thead>
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Number of hours</th>
+                                <th>Number of days</th>
                                 <th>Cost</th>
                             </tr>
                             </thead>
@@ -115,7 +115,7 @@
                                 <tr>
                                     <td>{{ infoEmployeeOnPrj.employee.firstName }} </td>
                                     <td>{{ infoEmployeeOnPrj.employee.lastName }}</td>
-                                    <td>{{ infoEmployeeOnPrj.nbDays }} hours</td>
+                                    <td>{{ infoEmployeeOnPrj.nbDays }} days</td>
                                     <td>{{ (infoEmployeeOnPrj.nbDays*infoEmployeeOnPrj.employee.dailyCost)|format_currency('EUR') }}</td>
                                 </tr>
                             {% endfor %}

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Repository\EmployeeRepository;
 use App\Repository\JobRepository;
-use App\Repository\WorkingHoursRepository;
+use App\Repository\WorkingDaysRepository;
 use App\Repository\ProjectRepository;
 
 class MainController extends AbstractController
@@ -16,17 +16,17 @@ class MainController extends AbstractController
     private JobRepository $jobRepository;
     private EmployeeRepository $employeeRepository;
     private ProjectRepository $projectRepository;
-    private WorkingHoursRepository $workingHoursRepository;
+    private WorkingDaysRepository $workingDaysRepository;
 
     public function __construct(JobRepository $jobRepository,
                                 EmployeeRepository $employeeRepository,
                                 ProjectRepository $projectRepository,
-                                WorkingHoursRepository $workingHoursRepository)
+                                WorkingDaysRepository $workingDaysRepository)
     {
         $this->jobRepository = $jobRepository;;
         $this->employeeRepository = $employeeRepository;
         $this->projectRepository = $projectRepository;
-        $this->workingHoursRepository = $workingHoursRepository;
+        $this->workingDaysRepository = $workingDaysRepository;
     }
 
     /**
@@ -36,11 +36,11 @@ class MainController extends AbstractController
     {
         $countEmployees = $this->employeeRepository->countEmployees()[1];
         $projects = $this->projectRepository->findCostByProject();
-        $productionTimes = $this->workingHoursRepository->findFiveLatestCreateInfos();
+        $productionTimes = $this->workingDaysRepository->findTenLatestCreateInfos();
         $finishCountProject = $this->projectRepository->finishCountProject()[1];
         $notFinishCountProject = $this->projectRepository->notFinishCountProject()[1];
-        $countHours = $this->workingHoursRepository->countHours();
-        $bestEmployee = $this->workingHoursRepository->bestEmployee();
+        $countDays = $this->workingDaysRepository->countDays();
+        $bestEmployee = $this->workingDaysRepository->bestEmployee();
         $deliveryRate = ($finishCountProject / ($finishCountProject + $notFinishCountProject)) * 100;
         $profitable = $this->calculateProfitability($this->projectRepository->projectListFinish());
         return $this->render('main/homepage.html.twig', [
@@ -49,7 +49,7 @@ class MainController extends AbstractController
             'productionTimes' => $productionTimes,
             'finishCountProject' => $finishCountProject,
             'notFinishCountProject' => $notFinishCountProject,
-            'countHours' => $countHours,
+            'countDays' => $countDays,
             'bestEmployee' => $bestEmployee,
             'deliveryRate' => $deliveryRate,
             'profitable' => $profitable
