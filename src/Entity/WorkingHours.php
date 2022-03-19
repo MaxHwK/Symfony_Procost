@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkingHoursRepository")
@@ -32,7 +33,7 @@ class WorkingHours
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbHours;
+    private $nbDays;
 
     /**
      * @ORM\Column(type="datetime")
@@ -42,7 +43,7 @@ class WorkingHours
 
     public function __construct()
     {
-        $this->creationDate = new DateTime();
+        $this->creationDate = new \DateTime();
     }
 
     public function getId(): ?int
@@ -74,14 +75,14 @@ class WorkingHours
         return $this;
     }
 
-    public function getNbHours(): ?int
+    public function getNbDays(): ?int
     {
-        return $this->nbHours;
+        return $this->nbDays;
     }
 
-    public function setNbHours(int $nbHours): self
+    public function setNbDays(int $nbDays): self
     {
-        $this->nbHours = $nbHours;
+        $this->nbDays = $nbDays;
 
         return $this;
     }

@@ -82,9 +82,9 @@
                         <div class="form-group row">
                             <label for="days-count" class="control-label col-md-6">Number of hours</label>
                             <div class="col-md-6">
-                                {{ form_errors(form.nbHours) }}
-                                {{ form_label(form.nbHours) }}
-                                {{ form_widget(form.nbHours,{'type':'number','attr':{'class':'form-control','placeholder':form.nbHours.vars.label}}) }}
+                                {{ form_errors(form.nbDays) }}
+                                {{ form_label(form.nbDays) }}
+                                {{ form_widget(form.nbDays,{'type':'number','attr':{'class':'form-control','placeholder':form.nbDays.vars.label}}) }}
                             </div>
                         </div>
                         <div class="row">
@@ -115,8 +115,8 @@
                                 <tr>
                                     <td>{{ infoEmployeeOnPrj.employee.firstName }} </td>
                                     <td>{{ infoEmployeeOnPrj.employee.lastName }}</td>
-                                    <td>{{ infoEmployeeOnPrj.nbHours }} hours</td>
-                                    <td>{{ (infoEmployeeOnPrj.nbHours*infoEmployeeOnPrj.employee.dailyCost)|format_currency('EUR') }}</td>
+                                    <td>{{ infoEmployeeOnPrj.nbDays }} hours</td>
+                                    <td>{{ (infoEmployeeOnPrj.nbDays*infoEmployeeOnPrj.employee.dailyCost)|format_currency('EUR') }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

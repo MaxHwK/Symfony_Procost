@@ -15,7 +15,7 @@ class AddTimeInPrjNoEmployeeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nbHours', TextType::class, ['label' => 'Daily Cost']);
+        $builder->add('nbDays', TextType::class, ['label' => 'Daily Cost']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

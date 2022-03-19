@@ -35,7 +35,7 @@ class WorkingHoursRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getResult();
     }
 
-    public function findPersonValueByProject($id, $page)
+    public function findValuePersonByProject($id, $page)
     {
         $queryb = $this->createQueryBuilder('m')
             ->addSelect('e')
@@ -61,7 +61,7 @@ class WorkingHoursRepository extends ServiceEntityRepository
     public function findEmployeeByProject($id)
     {
         $queryb = $this->createQueryBuilder('m')
-            ->select('(sum(m.nbHours)*e.dailyCost) as cost')
+            ->select('(sum(m.nbDays)*e.dailyCost) as cost')
             ->innerJoin('m.employee', 'e')
             ->where('m.project = :id')
             ->setParameter('id', $id)
@@ -69,17 +69,17 @@ class WorkingHoursRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getResult();
     }
 
-    public function countAllHours()
+    public function countHours()
     {
         $queryb = $this->createQueryBuilder('m')
-            ->select('sum(m.nbHours) as allHours');
+            ->select('sum(m.nbDays) as allHours');
         return $queryb->getQuery()->getOneOrNullResult();
     }
 
     public function bestEmployee()
     {
         $queryb = $this->createQueryBuilder('m')
-            ->select('(sum(m.nbHours)*e.dailyCost) as cost')
+            ->select('(sum(m.nbDays)*e.dailyCost) as cost')
             ->addSelect('m as value')
             ->innerJoin('m.employee', 'e')
             ->groupBy('m.employee')
@@ -88,7 +88,7 @@ class WorkingHoursRepository extends ServiceEntityRepository
         return $queryb->getQuery()->getOneOrNullResult();
     }
 
-    public function countProjectByLine($id)
+    public function countLineByProject($id)
     {
         $queryb = $this->createQueryBuilder('m')
             ->select('count(m)')

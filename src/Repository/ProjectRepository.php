@@ -26,7 +26,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->select('p as project')
             ->leftJoin('p.timesList', 'm')
             ->leftJoin('m.employee', 'e')
-            ->addSelect('e,m ,sum(m.nbHours*e.dailyCost) as total')
+            ->addSelect('e,m ,sum(m.nbDays*e.dailyCost) as total')
             ->groupBy('p.id')
             ->orderBy('p.creationDate', 'DESC')
             ->setMaxResults(5);
@@ -49,7 +49,7 @@ class ProjectRepository extends ServiceEntityRepository
             ->select('p as project')
             ->leftJoin('p.timesList', 'm')
             ->leftJoin('m.employee', 'e')
-            ->addSelect('e,m ,sum(m.nbHours*e.dailyCost) as total')
+            ->addSelect('e,m ,sum(m.nbDays*e.dailyCost) as total')
             ->where('p.deliveryDate IS NOT NULL')
             ->groupBy('p.id')
             ->orderBy('p.creationDate', 'DESC')

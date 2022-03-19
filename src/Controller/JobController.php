@@ -30,9 +30,9 @@ class JobController extends AbstractController
      */
     public function listJob(?int $page = 1): Response
     {
-        $jobs = $this->jobRepository->findAllJobAndPosibilityToDelete($page);
+        $jobs = $this->jobRepository->findAllJobsPossibilitiesToDelete($page);
         $countPage = ceil($this->jobRepository->countJob()[1] / 10);
-        return $this->render('job/list.html.twig', [
+        return $this->render('job/listJob.html.twig', [
             'jobs' => $jobs,
             'countPage' => $countPage,
             'actualyPage' => $page,
@@ -47,22 +47,19 @@ class JobController extends AbstractController
      */
     public function createJob(Request $request): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') === true) {
-            $job = new Job();
-            $form = $this->createForm(JobType::class, $job);
-            $form->handleRequest($request);
+        $job = new Job();
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->jobManager->save($job);
-                $this->addFlash('success', 'Job has been created !');
-                return $this->redirectToRoute('list_job');
-            }
-            return $this->render('job/edit.html.twig', [
-                'form' => $form->createView()
-            ]);
-        } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->jobManager->save($job);
+            $this->addFlash('success', 'Job has been created !');
             return $this->redirectToRoute('list_job');
         }
+
+        return $this->render('job/formJob.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -73,22 +70,19 @@ class JobController extends AbstractController
      */
     public function editJob(Request $request, int $id): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') === true) {
-            $job = $this->jobRepository->find($id);
-            $form = $this->createForm(JobType::class, $job);
-            $form->handleRequest($request);
+        $job = $this->jobRepository->find($id);
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->jobManager->update();
-                $this->addFlash('success', 'Job has been updated !');
-                return $this->redirectToRoute('list_job');
-            }
-            return $this->render('job/edit.html.twig', [
-                'form' => $form->createView()
-            ]);
-        } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->jobManager->update();
+            $this->addFlash('success', 'Job has been updated !');
             return $this->redirectToRoute('list_job');
         }
+
+        return $this->render('job/formJob.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -99,11 +93,10 @@ class JobController extends AbstractController
      */
     public function deleteJob(Request $request, int $id): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') === true) {
-            $job = $this->jobRepository->find($id);
-            $this->jobManager->delete($job);
-            return $this->redirectToRoute('list_job');
-        }
+        $job = $this->jobRepository->find($id);
+        $this->jobManager->delete($job);
+        return $this->redirectToRoute('list_job');
+        
     }
 
 }

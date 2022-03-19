@@ -45,7 +45,7 @@ class Project
     private $creationDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Type(type="\DateTimeInterface")
      */
     private $deliveryDate;
@@ -57,7 +57,7 @@ class Project
 
     public function __construct()
     {
-        $this->creationDate = new DateTime();
+        $this->creationDate = new \DateTime();
         $this->deliveryDate = null;
         $this->timesList = new ArrayCollection();
     }

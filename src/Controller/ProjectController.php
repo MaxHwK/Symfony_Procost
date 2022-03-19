@@ -44,9 +44,9 @@ class ProjectController extends AbstractController
     public function listProject(?int $page = 1): Response
     {
         $projects = $this->projectRepository->findProjectByPage($page);
-        $countPage = ceil($this->projectRepository->countProject()[1] / 10);
+        $countPage = ceil($this->projectRepository->countProjects()[1] / 10);
 
-        return $this->render('project/list.html.twig', [
+        return $this->render('project/listProject.html.twig', [
             'projects' => $projects,
             'countPage' => $countPage,
             'actualyPage' => $page,
@@ -61,24 +61,19 @@ class ProjectController extends AbstractController
      */
     public function createProject(Request $request): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') === true) {
-            $project = new Project();
-            $form = $this->createForm(ProjectType::class, $project);
-            $form->handleRequest($request);
+        $project = new Project();
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->projectManager->save($project);
-                $this->addFlash('success', 'Project has been created !');
-                return $this->redirectToRoute('list_project');
-            }
-
-            return $this->render('project/edit.html.twig', [
-                'form' => $form->createView()
-            ]);
-
-        } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->projectManager->save($project);
+            $this->addFlash('success', 'Project has been created !');
             return $this->redirectToRoute('list_project');
         }
+
+        return $this->render('project/formProject.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -89,24 +84,19 @@ class ProjectController extends AbstractController
      */
     public function editProject(Request $request, int $id): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') === true) {
-            $project = $this->projectRepository->find($id);
-            $form = $this->createForm(ProjectType::class, $project);
-            $form->handleRequest($request);
+        $project = $this->projectRepository->find($id);
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->projectManager->update();
-                $this->addFlash('success', 'Project has been updated !');
-                return $this->redirectToRoute('list_project');
-            }
-
-            return $this->render('project/edit.html.twig', [
-                'form' => $form->createView()
-            ]);
-
-        } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->projectManager->update();
+            $this->addFlash('success', 'Project has been updated !');
             return $this->redirectToRoute('list_project');
         }
+
+        return $this->render('project/formProject.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -127,12 +117,8 @@ class ProjectController extends AbstractController
             if ($project->getDeliveryDate() === null) {
                 $addTime = new WorkingHours();
                 $addTime->setProject($project);
-                if ($this->getRoles()[0] === 'ROLE_USER') {
-                    $addTime->setEmployee($this->getEmployee());
-                    $form = $this->createForm(AddTimeInProjectWithoutEmployeeType::class, $addTime);
-                } else {
-                    $form = $this->createForm(AddTimeInProjectType::class, $addTime);
-                }
+                $addTime->setEmployee($this->getEmployee());
+                $form = $this->createForm(AddTimeInProjectType::class, $addTime);
                 $form->handleRequest($request);
 
                 if ($form->isSubmitted() && $form->isValid()) {
@@ -140,7 +126,7 @@ class ProjectController extends AbstractController
                     $this->addFlash('success', 'Employee has been added to the project !');
                     return $this->redirectToRoute('show_project', ['id' => $id]);
                 }
-                return $this->render('project/show.html.twig', [
+                return $this->render('project/detailProject.html.twig', [
                     'project' => $project,
                     'infoEmployeeOnPrj' => $infoEmployeeOnPrj,
                     'infoCostProject' => $infoCostProject,
@@ -151,7 +137,7 @@ class ProjectController extends AbstractController
                 ]);
             } else {
 
-                return $this->render('project/show.html.twig', [
+                return $this->render('project/detailProject.html.twig', [
                     'project' => $project,
                     'infoEmployeeOnPrj' => $infoEmployeeOnPrj,
                     'infoCostProject' => $infoCostProject,
@@ -169,15 +155,10 @@ class ProjectController extends AbstractController
      */
     public function pushProject(int $id): Response
     {
-        if ($this->getUser() instanceof User) {
-            if ($this->isGranted('ROLE_ADMIN') === true) {
-                $project = $this->projectRepository->find($id);
-                $project->setDeliveryDate(new DateTime());
-                $this->projectManager->update();
-                $this->addFlash('success', 'Project has been delivered !');
-            }
-            return $this->redirectToRoute('list_project');
-
-        }
+        $project = $this->projectRepository->find($id);
+        $project->setDeliveryDate(new DateTime());
+        $this->projectManager->update();
+        $this->addFlash('success', 'Project has been delivered !');     
     }
+
 }

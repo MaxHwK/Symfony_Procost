@@ -35,15 +35,15 @@ class MainController extends AbstractController
     public function index(): Response
     {
         $countEmployees = $this->employeeRepository->countEmployees()[1];
-        $projects = $this->projectRepository->findTotalCostByProject();
+        $projects = $this->projectRepository->findCostByProject();
         $productionTimes = $this->workingHoursRepository->findFiveLatestCreateInfos();
         $finishCountProject = $this->projectRepository->finishCountProject()[1];
         $notFinishCountProject = $this->projectRepository->notFinishCountProject()[1];
         $countHours = $this->workingHoursRepository->countHours();
-        $bestEmployee = $this->workingHoursRepository->bestEmploy();
+        $bestEmployee = $this->workingHoursRepository->bestEmployee();
         $deliveryRate = ($finishCountProject / ($finishCountProject + $notFinishCountProject)) * 100;
         $profitable = $this->calculateProfitability($this->projectRepository->projectListFinish());
-        return $this->render('main/home.html.twig', [
+        return $this->render('main/homepage.html.twig', [
             'countEmployees' => $countEmployees,
             'projects' => $projects,
             'productionTimes' => $productionTimes,

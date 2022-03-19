@@ -48,7 +48,7 @@
                             <i class="icon fa fa-calendar-check-o fa-3x" aria-hidden="true"></i>
                             <div class="info">
                                 <p class="text-muted text-sm text-uppercase">Production days</p>
-                                <p><strong>{{ nbHours.allHours }}</strong></p>
+                                <p><strong>{{ countHours.allHours }}</strong></p>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                                 <a href="{{ asset('/employee/show/'~productionTime.employee.id) }}">{{ productionTime.employee.firstName }} {{ productionTime.employee.lastName }}</a>
                                 worked on 
                                 <a href="{{ asset('/project/show/'~productionTime.project.id) }}">{{ productionTime.project.name }}</a>
-                                <div class="text-muted font-italic text-right">{{ productionTime.days }} days</div>
+                                <div class="text-muted font-italic text-right">{{ productionTime.nbDays }} days</div>
                             </li>
                         {% endfor %}
                     </ul>

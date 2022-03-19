@@ -105,7 +105,7 @@ class AppFixtures extends Fixture
             $project = (new WorkingHours())
                 ->setEmployee($this->getReference(Employee::class . random_int(0, 4)))
                 ->setProject($this->getReference(Project::class . random_int(0, 3)))
-                ->setNbHours($value);
+                ->setNbDays($value);
             $this->manager->persist($project);
             $this->addReference(WorkingHours::class . $key, $project);
         }

@@ -25,7 +25,7 @@ class JobRepository extends ServiceEntityRepository
         parent::__construct($registry, Job::class);
     }
 
-    public function findAllJobsToDelete(int $page)
+    public function findAllJobsPossibilitiesToDelete(int $page)
     {
         $value = ($page - 1) * 10;
         $sql = 'SELECT *, (SELECT COUNT(*) FROM employee WHERE job_id = Job.id) as numberJobUse

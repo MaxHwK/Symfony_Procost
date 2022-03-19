@@ -24,14 +24,15 @@
             <div class="app-sidebar__user">
                 <img class="app-sidebar__user-avatar" src="{{ asset('img/user.jpg') }}" alt="User Image">
                 <div>
-                    <p class="app-sidebar__user-name">{{ app.user.employee.firstName }} {{ app.user.employee.lastName }}</p>
-                    <p class="app-sidebar__user-designation">{{ app.user.employee.job.name }}</p>
+                    <p class="app-sidebar__user-name">Maxence GIRON</p>
+                    <p class="app-sidebar__user-designation">Web Project Manager</p>
                 </div>
             </div>
             {% set current_route = app.request.attributes.get('_route') %}
             <ul class="app-menu">
                 <li>
-                    <a class="app-menu__item active" href="#">
+                    <a class="app-menu__item {{ current_route is same as('main_homepage') ? 'active' }}"
+                    href={{ path('main_homepage') }}>
                         <i class="app-menu__icon fa fa-dashboard"></i>
                         <span class="app-menu__label">Dashboard</span>
                     </a>

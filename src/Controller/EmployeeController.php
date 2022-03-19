@@ -43,7 +43,7 @@ class EmployeeController extends AbstractController
     {
         $countPage = ceil($this->employeeRepository->countEmployees()[1] / 10);
         $employees = $this->employeeRepository->findEmployeeByPage($page);
-        return $this->render('employee/list.html.twig', [
+        return $this->render('employee/listEmployee.html.twig', [
             'employees' => $employees,
             'countPage' => $countPage,
             'actualyPage' => $page,
@@ -58,24 +58,19 @@ class EmployeeController extends AbstractController
      */
     public function createEmployee(Request $request): Response
     {
-        if ($this->isGranted('ROLE_ADMIN') === true) {
-            $employee = new Employee();
-            $form = $this->createForm(EmployeeType::class, $employee);
-            $form->handleRequest($request);
+        $employee = new Employee();
+        $form = $this->createForm(EmployeeType::class, $employee);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->employeeManager->save($employee);
-                $this->addFlash('success', 'Employee has been created !');
-                return $this->redirectToRoute('list_employee');
-            }
-            
-            return $this->render('employee/edit.html.twig', [
-                'form' => $form->createView()
-            ]);
-
-        } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->employeeManager->save($employee);
+            $this->addFlash('success', 'Employee has been created !');
             return $this->redirectToRoute('list_employee');
         }
+            
+        return $this->render('employee/formEmployee.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -97,7 +92,7 @@ class EmployeeController extends AbstractController
                 return $this->redirectToRoute('list_employee');
             }
             
-            return $this->render('employee/edit.html.twig', ['form' => $form->createView()]);
+            return $this->render('employee/formEmployee.html.twig', ['form' => $form->createView()]);
 
         } else {
             return $this->redirectToRoute('list_employee');
@@ -130,7 +125,7 @@ class EmployeeController extends AbstractController
                 return $this->redirectToRoute('show_employee', ['id' => $id]);
             }
 
-            return $this->render('employee/show.html.twig', [
+            return $this->render('employee/detailEmployee.html.twig', [
                 'employee' => $employee,
                 'hourlists' => $hourlists,
                 'form' => $form->createView(),

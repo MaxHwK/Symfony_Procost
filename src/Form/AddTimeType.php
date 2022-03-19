@@ -24,7 +24,7 @@ class AddTimeType extends AbstractType
                 },
                 'choice_label' => 'name',
             ])
-            ->add('nbHours', TextType::class, ['label' => 'Daily Cost']);
+            ->add('nbDays', TextType::class, ['label' => 'Daily Cost']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
