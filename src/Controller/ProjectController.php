@@ -114,38 +114,40 @@ class ProjectController extends AbstractController
         $url = '/project/show/' . $id . '/';
         $countPage = ceil($this->workingDaysRepository->countLineByProject($id)[1] / 5);
 
-            if ($project->getDeliveryDate() === null) {
-                $addTime = new WorkingDays();
-                $addTime->setProject($project);
-                $addTime->setEmployee($this->getEmployee());
-                $form = $this->createForm(AddTimeInProjectType::class, $addTime);
-                $form->handleRequest($request);
+        if ($project->getDeliveryDate() == null) {
+            $addTime = new WorkingDays();
+            $addTime->setProject($project);
+            $addTime->setEmployee($this->getEmployee());
+            $form = $this->createForm(AddTimeInProjectType::class, $addTime);
+            $form->handleRequest($request);
 
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $this->addTimeManager->save($addTime);
-                    $this->addFlash('success', 'Employee has been added to the project !');
-                    return $this->redirectToRoute('show_project', ['id' => $id]);
-                }
-                return $this->render('project/detailProject.html.twig', [
-                    'project' => $project,
-                    'infoEmployeeOnPrjs' => $infoEmployeeOnPrjs,
-                    'infoCostProject' => $infoCostProject,
-                    'form' => $form->createView(),
-                    'countPage' => $countPage,
-                    'actualyPage' => $page,
-                    'url' => $url
-                ]);
-            } else {
-
-                return $this->render('project/detailProject.html.twig', [
-                    'project' => $project,
-                    'infoEmployeeOnPrjs' => $infoEmployeeOnPrjs,
-                    'infoCostProject' => $infoCostProject,
-                    'countPage' => $countPage,
-                    'actualyPage' => $page,
-                    'url' => $url
-                ]);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->addTimeManager->save($addTime);
+                $this->addFlash('success', 'Employee has been added to the project !');
+                return $this->redirectToRoute('show_project', ['id' => $id]);
             }
+            
+            return $this->render('project/detailProject.html.twig', [
+                'project' => $project,
+                'infoEmployeeOnPrjs' => $infoEmployeeOnPrjs,
+                'infoCostProject' => $infoCostProject,
+                'form' => $form->createView(),
+                'countPage' => $countPage,
+                'actualyPage' => $page,
+                'url' => $url
+            ]);
+
+        } else {
+
+            return $this->render('project/detailProject.html.twig', [
+                'project' => $project,
+                'infoEmployeeOnPrjs' => $infoEmployeeOnPrjs,
+                'infoCostProject' => $infoCostProject,
+                'countPage' => $countPage,
+                'actualyPage' => $page,
+                'url' => $url
+            ]);
+        }
     }
 
     /**
@@ -158,7 +160,8 @@ class ProjectController extends AbstractController
         $project = $this->projectRepository->find($id);
         $project->setDeliveryDate(new DateTime());
         $this->projectManager->update();
-        $this->addFlash('success', 'Project has been delivered !');     
+        $this->addFlash('success', 'Project has been delivered !');
+        return $this->redirectToRoute('list_project');     
     }
 
 }

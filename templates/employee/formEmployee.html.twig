@@ -10,9 +10,9 @@
                 app.request.attributes.get('_route'),
                 app.request.attributes.get('_route_params')
                 ) == "/employee/edit" %}
-                    <h1><i class="fa fa-users"></i>Create employee</h1>
+                    <h1><i class="fa fa-users"></i> Create employee</h1>
                 {% else %}
-                    <h1><i class="fa fa-users"></i>Update employee</h1>
+                    <h1><i class="fa fa-users"></i> Update employee </h1>
                 {% endif %}
             </div>
             <ul class="app-breadcrumb breadcrumb">
@@ -37,7 +37,7 @@
         <div class="tile">
             {{ form_start(form) }}
             <section>
-                <h3>General Information</h3>
+                <h3>General Informations</h3>
                 <div class="row mt-4">
                     <div class="offset-md-4 col-md-8">
                         <div class="form-group row">
@@ -60,7 +60,7 @@
             </section>
             <hr/>
             <section>
-                <h3>Production</h3>
+                <h3>Production Informations</h3>
                 <div class="row mt-4">
                     <div class="offset-md-4 col-md-8">
                         <div class="form-group row">
@@ -87,7 +87,7 @@
                     {% if path(
                     app.request.attributes.get('_route'),
                     app.request.attributes.get('_route_params')
-                    ) == "/employ/edit" %}
+                    ) == "/employee/edit" %}
                         <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Create</button>
                     {% else %}
                         <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Update</button>

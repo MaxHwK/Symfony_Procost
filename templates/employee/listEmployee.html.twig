@@ -41,14 +41,14 @@
                             <td>{{ employee.email }}</td>
                             <td>{{ employee.job.name }}</td>
                             <td>{{ employee.dailyCost|format_currency('EUR') }}</td>
-                            <td>{{ employee.hiringDate|date("d/m/Y") }}</td>
+                            <td>{{ employee.hiringDate|date("d/m/Y G:i:s") }}</td>
 
                             <td>   
-                                <a href="{{ asset('/employee/detailEmployee/'~employee.id) }}" class="btn btn-primary btn-sm">
+                                <a href="{{ asset('/employee/show/'~employee.id) }}" class="btn btn-primary btn-sm">
                                         <i class="fa fa-eye mr-0"></i>
                                 </a>
 
-                                <a href="{{ asset('/employee/formEmployee/'~employee.id) }}" class="btn btn-info btn-sm">
+                                <a href="{{ asset('/employee/edit/'~employee.id) }}" class="btn btn-info btn-sm">
                                     <i class="fa fa-pencil mr-0"></i>
                                 </a>
                             </td>

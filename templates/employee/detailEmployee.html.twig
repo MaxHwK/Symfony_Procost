@@ -50,15 +50,13 @@
                         </tr>
                         <tr>
                             <th>Hiring date</th>
-                            <td>{{ employee.hiringDate|date("d/m/Y") }}</td>
+                            <td>{{ employee.hiringDate|date("d/m/Y G:i:s") }}</td>
                         </tr>
                         </tbody>
                     </table>
 
-                    {% if app.user.employee.id == employ.id %}
-                        <a href="{{ asset('/employee/edit/'~employee.id) }}" class="btn btn-info">
-                            <i class="fa fa-pencil"></i>Edit</a>
-                    {% endif %}
+                    <a href="{{ asset('/employee/edit/'~employee.id) }}" class="btn btn-info">
+                        <i class="fa fa-pencil"></i>Edit</a>
                 </div>
 
                 <div class="tile">
@@ -73,7 +71,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="days-count" class="control-label col-md-6">Number of days</label>
+                        <label for="days-count" class="control-label col-md-6">Days</label>
                         <div class="col-md-6">
                             {{ form_errors(form.nbDays) }}
                             {{ form_label(form.nbDays) }}
@@ -96,18 +94,18 @@
                             <thead>
                             <tr>
                                 <th>Project</th>
-                                <th>Time</th>
+                                <th>Days</th>
                                 <th>Entry date</th>
                                 <th>Total cost</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for hourlist in hourlists %}
+                            {% for timeslist in timeslists %}
                                 <tr>
-                                    <td>{{ hourlist.project.name }}</td>
-                                    <td>{{ hourlist.hours }}</td>
-                                    <td>{{ hourlist.creationDate|date("d/m/Y") }}</td>
-                                    <td>{{ (hourlist.hours*hourlist.employee.dailyCost)|format_currency('EUR') }}</td>
+                                    <td>{{ timeslist.project.name }}</td>
+                                    <td>{{ timeslist.nbDays }}</td>
+                                    <td>{{ timeslist.creationDate|date("d/m/Y G:i:s") }}</td>
+                                    <td>{{ (timeslist.nbDays*timeslist.employee.dailyCost)|format_currency('EUR') }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

@@ -81,22 +81,17 @@ class EmployeeController extends AbstractController
      */
     public function editEmployee(Request $request, int $id): Response
     {
-        if ($this->getEmployee()->getId() === $id) {
-            $employee = $this->employeeRepository->find($id);
-            $form = $this->createForm(EmployeeType::class, $employee);
-            $form->handleRequest($request);
+        $employee = $this->employeeRepository->find($id);
+        $form = $this->createForm(EmployeeType::class, $employee);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->employeeManager->update();
-                $this->addFlash('success', 'Employee has been updated !');
-                return $this->redirectToRoute('list_employee');
-            }
-            
-            return $this->render('employee/formEmployee.html.twig', ['form' => $form->createView()]);
-
-        } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->employeeManager->update();
+            $this->addFlash('success', 'Employee has been updated !');
             return $this->redirectToRoute('list_employee');
         }
+            
+        return $this->render('employee/formEmployee.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -108,35 +103,30 @@ class EmployeeController extends AbstractController
      */
     public function showEmployee(Request $request, int $id, ?int $page): Response
     {
-        if ($this->getEmployee()->getId() === $id) {
-            $hourlists = $this->workingDaysRepository->findAllValue($id, $page);
-            $employee = $this->employeeRepository->find($id);
-            $url = '/employee/show/' . $id . '/';
-            $countPage = ceil($this->workingDaysRepository->countLineByEmployee($id)[1] / 5);
+        $timeslists = $this->workingDaysRepository->findAllValues($id, $page);
+        $employee = $this->employeeRepository->find($id);
+        $url = '/employee/show/' . $id . '/';
+        $countPage = ceil($this->workingDaysRepository->countEmployeeByLine($id)[1] / 5);
 
-            $addTime = new WorkingDays();
-            $addTime->setEmployee($hourlists[0]->getEmployee());
-            $form = $this->createForm(AddTimeType::class, $addTime);
-            $form->handleRequest($request);
+        $addTime = new WorkingDays();
+        $addTime->setEmployee($timeslists[0]->getEmployee());
+        $form = $this->createForm(AddTimeType::class, $addTime);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->addTimeManager->save($addTime);
-                $this->addFlash('success', 'Time has been added to the project !');
-                return $this->redirectToRoute('show_employee', ['id' => $id]);
-            }
-
-            return $this->render('employee/detailEmployee.html.twig', [
-                'employee' => $employee,
-                'hourlists' => $hourlists,
-                'form' => $form->createView(),
-                'countPage' => $countPage,
-                'actualyPage' => $page,
-                'url' => $url
-            ]);
-
-        } else {
-            return $this->redirectToRoute('list_employee');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addTimeManager->save($addTime);
+            $this->addFlash('success', 'Days have been added to the project !');
+            return $this->redirectToRoute('show_employee', ['id' => $id]);
         }
+
+        return $this->render('employee/detailEmployee.html.twig', [
+            'employee' => $employee,
+            'timeslists' => $timeslists,
+            'form' => $form->createView(),
+            'countPage' => $countPage,
+            'actualyPage' => $page,
+            'url' => $url
+        ]);
     }
 
 }

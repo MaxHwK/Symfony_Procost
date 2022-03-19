@@ -33,7 +33,7 @@ class JobRepository extends ServiceEntityRepository
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->findAll();
     }
 
     public function countJobs()

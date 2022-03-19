@@ -133,7 +133,7 @@
                                 <th>
                                     <a href="{{ asset('/project/show/'~project.project.id) }}">{{ project.project.name }}</a>
                                 </th>
-                                <th>{{ project.project.creationDate|date("d/m/Y") }}</th>
+                                <th>{{ project.project.creationDate|date("d/m/Y G:i:s") }}</th>
                                 <th>{{ project.project.price|format_currency('EUR') }}</th>
                                 {% if project.total == null %}
                                     <th>0 €</th>
