@@ -95,8 +95,7 @@ class JobController extends AbstractController
     {
         $job = $this->jobRepository->find($id);
         $this->jobManager->delete($job);
-        return $this->redirectToRoute('list_job');
-        
+        return $this->redirectToRoute('list_job');  
     }
 
 }

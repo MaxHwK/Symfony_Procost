@@ -41,7 +41,7 @@
                             <td>{{ employee.email }}</td>
                             <td>{{ employee.job.name }}</td>
                             <td>{{ employee.dailyCost|format_currency('EUR') }}</td>
-                            <td>{{ employee.hiringDate|date("d/m/Y G:i:s") }}</td>
+                            <td>{{ employee.hiringDate|date("d/m/Y") }}</td>
 
                             <td>   
                                 <a href="{{ asset('/employee/show/'~employee.id) }}" class="btn btn-primary btn-sm">

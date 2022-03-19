@@ -109,7 +109,6 @@ class EmployeeController extends AbstractController
         $countPage = ceil($this->workingDaysRepository->countEmployeeByLine($id)[1] / 5);
 
         $addTime = new WorkingDays();
-        $addTime->setEmployee($timeslists[0]->getEmployee());
         $form = $this->createForm(AddTimeType::class, $addTime);
         $form->handleRequest($request);
 
