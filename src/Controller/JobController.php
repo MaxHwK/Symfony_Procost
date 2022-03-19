@@ -31,7 +31,7 @@ class JobController extends AbstractController
     public function listJob(?int $page = 1): Response
     {
         $jobs = $this->jobRepository->findAllJobsPossibilitiesToDelete($page);
-        $countPage = ceil($this->jobRepository->countJob()[1] / 10);
+        $countPage = ceil($this->jobRepository->countJobs()[1] / 10);
         return $this->render('job/listJob.html.twig', [
             'jobs' => $jobs,
             'countPage' => $countPage,

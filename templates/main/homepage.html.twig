@@ -175,9 +175,15 @@
 
 {% block script %}
     {{ parent() }}
-    <script
-        var ratioData = [{{ profitable|number_format(2, '.', ',') }}, 100-{{ profitable|number_format(2, '.', ',') }}];
-        var deliveredData = [{{ deliveryRate|number_format(2, '.', ',') }}, 100-{{ deliveryRate|number_format(2, '.', ',') }}]; >
+    {% set graphProfit = profitable %}
+    {% set graphDelivery = deliveryRate %}
+
+    <script>
+        var dataGraphProfit = "{{graphProfit}}";
+        var dataGraphDelivery = "{{graphDelivery}}"
+        var ratioData = [dataGraphProfit, (100 - dataGraphProfit)];
+        var deliveredData = [dataGraphDelivery, (100 - dataGraphDelivery)];
     </script> 
+
     <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}

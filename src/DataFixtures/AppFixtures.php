@@ -25,10 +25,10 @@ class AppFixtures extends Fixture
 
     private const DATA_EMPLOYEES = [
         ['Maxence', 'GIRON', 'maxence.giron@gmail.com', '1000'],
-        ['John', 'DOE', 'john.doe@gmail.com', '800'],
-        ['Harry', 'COVER', 'harry.cover@gmail.com', '600'],
-        ['Jean', 'REGISTRE', 'jean.registre@gmail.com', '400'],
-        ['Alex', 'TERIEUR', 'alex.terieur@gmail.com', '200'],
+        ['John', 'DOE', 'john.doe@gmail.com', '900'],
+        ['Harry', 'COVER', 'harry.cover@gmail.com', '800'],
+        ['Jean', 'REGISTRE', 'jean.registre@gmail.com', '700'],
+        ['Alex', 'TERIEUR', 'alex.terieur@gmail.com', '600'],
     ];
 
     public function load(ObjectManager $manager)
@@ -64,6 +64,7 @@ class AppFixtures extends Fixture
                 ->setJob($job);
             $this->manager->persist($employee);
             $this->addReference(Employee::class . $key, $employee);
+            sleep(1);
         }
     }
 
@@ -92,6 +93,7 @@ class AppFixtures extends Fixture
                 ->setCreationDate($value[3]);
             $this->manager->persist($project);
             $this->addReference(Project::class . $key, $project);
+            sleep(1);
         }
     }
 

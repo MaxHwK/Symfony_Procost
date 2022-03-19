@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\DBAL\DriverManager;
 
 use App\Entity\Job;
 
@@ -33,7 +34,6 @@ class JobRepository extends ServiceEntityRepository
 
         $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
         $stmt->execute();
-        return $stmt->findAll();
     }
 
     public function countJobs()
